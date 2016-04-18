@@ -1,5 +1,6 @@
 package org.vaadin.liveimageeditor.demo;
 
+import org.vaadin.liveimageeditor.LiveImageEditor;
 import org.vaadin.liveimageeditor.MyComponent;
 
 import javax.servlet.annotation.WebServlet;
@@ -26,18 +27,10 @@ public class DemoUI extends UI
 
     @Override
     protected void init(VaadinRequest request) {
+        LiveImageEditor imageEditor = new LiveImageEditor();
 
-        // Initialize our new UI component
-        final MyComponent component = new MyComponent();
-
-        // Show it in the middle of the screen
-        final VerticalLayout layout = new VerticalLayout();
-        layout.setStyleName("demoContentLayout");
-        layout.setSizeFull();
-        layout.addComponent(component);
-        layout.setComponentAlignment(component, Alignment.MIDDLE_CENTER);
+        VerticalLayout layout = new VerticalLayout(imageEditor);
         setContent(layout);
-
     }
 
 }

@@ -5,7 +5,4 @@
 	<!-- Inherit DefaultWidgetSet -->
 	<inherits name="com.vaadin.DefaultWidgetSet" /> 
 
-	<!-- Widget styles in public -directory -->
-	<stylesheet src="live-image-editor/styles.css"/>
-
 </module>

@@ -4,6 +4,8 @@ import com.vaadin.shared.ui.JavaScriptComponentState;
 
 public class LiveImageEditorState extends JavaScriptComponentState {
 
+    public String imageUrl;
+
     public Double translateX;
 
     public Double translateY;

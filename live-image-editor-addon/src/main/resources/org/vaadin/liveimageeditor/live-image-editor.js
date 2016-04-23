@@ -1,7 +1,5 @@
 window.org_vaadin_liveimageeditor_LiveImageEditor = function() {
 
-    var elem = $(this.getElement());
-    elem.html('<div id="cropBorder" class="crop-border"><img id="image" src="https://cdn2.hubspot.net/hub/1840687/hubfs/Images/Newsletter/newsletter-january.jpg?t=1460722904652&width=600" /></div>');
     var tx = 0;
     var ty = 0;
     var r = 0;
@@ -14,56 +12,68 @@ window.org_vaadin_liveimageeditor_LiveImageEditor = function() {
     var px;
     var py;
 
-    $(document).ready(function() {
-        image = $("#image");
-        crop = $("#cropBorder");
+    var connector = this;
+    var elem = $(connector.getElement());
 
-        image.mousedown(function(event) {
-            event.preventDefault();
-        });
+    connector.onStateChange = function() {
+        var imageUrl = connector.translateVaadinUri(connector.getState().imageUrl);
 
-        crop.mousedown(function(event) {
-            mouseDown = true;
-            px = event.pageX;
-            py = event.pageY;
-            crop.addClass("mouse-down");
-        });
+        if (imageUrl != null) {
+            elem.html('<div id="cropBorder" class="crop-border"><img id="image" src="' + imageUrl + '" /></div>');
 
-        crop.mouseup(function() {
-            mouseDown = false;
-            crop.removeClass("mouse-down");
-        });
+            image = $("#image");
+            crop = $("#cropBorder");
 
-        crop.mouseout(function() {
-            mouseDown = false;
-            crop.removeClass("mouse-down");
-        });
+            image.mousedown(function(event) {
+                event.preventDefault();
+            });
 
-        crop.mousemove(function(event) {
-            if (mouseDown) {
-                if (event.shiftKey) {
-                    var bounds = image[0].getBoundingClientRect();
-                    var cx = bounds.left + (bounds.width / 2);
-                    var cy = bounds.top + (bounds.height / 2);
-                    var r1 = Math.atan2(px - cx, py - cy);
-                    var r2 = Math.atan2(event.pageX - cx, event.pageY - cy);
-                    r += r1 - r2;
-
-                } else {
-                    tx += event.pageX - px;
-                    ty += event.pageY - py;
-                }
-
+            crop.mousedown(function(event) {
+                mouseDown = true;
                 px = event.pageX;
                 py = event.pageY;
-                updateImage();
-            }
-        });
+                crop.addClass("mouse-down");
+            });
 
-        crop.mousewheel(function(event, delta) {
-            s += 0.06 * delta;
-            updateImage();
-        });
+            crop.mouseup(function() {
+                mouseDown = false;
+                crop.removeClass("mouse-down");
+            });
+
+            crop.mouseout(function() {
+                mouseDown = false;
+                crop.removeClass("mouse-down");
+            });
+
+            crop.mousemove(function(event) {
+                if (mouseDown) {
+                    if (event.shiftKey) {
+                        var bounds = image[0].getBoundingClientRect();
+                        var cx = bounds.left + (bounds.width / 2);
+                        var cy = bounds.top + (bounds.height / 2);
+                        var r1 = Math.atan2(px - cx, py - cy);
+                        var r2 = Math.atan2(event.pageX - cx, event.pageY - cy);
+                        r += r1 - r2;
+
+                    } else {
+                        tx += event.pageX - px;
+                        ty += event.pageY - py;
+                    }
+
+                    px = event.pageX;
+                    py = event.pageY;
+                    updateImage();
+                }
+            });
+
+            crop.mousewheel(function(event, delta) {
+                s += 0.06 * delta;
+                updateImage();
+            });
+        }
+    }
+
+    $(document).ready(function() {
 
     });
 

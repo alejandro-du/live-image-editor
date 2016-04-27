@@ -16,13 +16,21 @@ window.org_vaadin_liveimageeditor_LiveImageEditor = function() {
     var elem = $(connector.getElement());
 
     connector.onStateChange = function() {
-        var imageUrl = connector.translateVaadinUri(connector.getState().imageUrl);
+        var state = connector.getState();
+        var imageUrl = connector.translateVaadinUri(state.imageUrl);
 
         if (imageUrl != null) {
             elem.html('<div id="cropBorder" class="crop-border"><img id="image" src="' + imageUrl + '" /></div>');
 
             image = $("#image");
             crop = $("#cropBorder");
+
+            tx = state.translateX;
+            ty = state.translateY;
+            r = state.rotate;
+            s = state.scale;
+
+            updateImage();
 
             image.mousedown(function(event) {
                 event.preventDefault();

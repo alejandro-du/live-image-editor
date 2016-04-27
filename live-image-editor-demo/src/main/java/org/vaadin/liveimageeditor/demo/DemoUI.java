@@ -1,5 +1,6 @@
 package org.vaadin.liveimageeditor.demo;
 
+import com.vaadin.server.StreamResource;
 import com.vaadin.ui.*;
 import org.vaadin.liveimageeditor.LiveImageEditor;
 import org.vaadin.liveimageeditor.MyComponent;
@@ -14,6 +15,7 @@ import com.vaadin.server.VaadinServlet;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 @Theme("demo")
@@ -28,17 +30,19 @@ public class DemoUI extends UI {
 
     private LiveImageEditor imageEditor = new LiveImageEditor();
     private Button send = new Button("Send", this::sendClicked);
+    private Image image = new Image();
     private ByteArrayOutputStream outputStream;
 
     @Override
     protected void init(VaadinRequest request) {
-        Upload upload = new Upload("Upload image file", this::receiveUpload);
+        Upload upload = new Upload(null, this::receiveUpload);
         upload.setImmediate(true);
         upload.addSucceededListener(this::uploadSucceeded);
 
         send.setVisible(false);
+        image.setVisible(false);
 
-        VerticalLayout layout = new VerticalLayout(upload, imageEditor, send);
+        VerticalLayout layout = new VerticalLayout(upload, imageEditor, send, image);
         layout.setMargin(true);
         layout.setSpacing(true);
         setContent(layout);
@@ -50,11 +54,18 @@ public class DemoUI extends UI {
 
     private void uploadSucceeded(Upload.SucceededEvent event) {
         imageEditor.setImage(new ByteArrayInputStream(outputStream.toByteArray()));
+        imageEditor.setTranslateX(50.0);
+        imageEditor.setTranslateY(25.0);
+        imageEditor.setScale(2.0);
+        imageEditor.setRotate(0.78);
         send.setVisible(true);
     }
 
     private void sendClicked(Button.ClickEvent event) {
-        OutputStream image = imageEditor.getEditedImage();
+        InputStream editedImage = imageEditor.getEditedImage();
+        StreamResource resource = new StreamResource(() -> editedImage, "edited-image");
+        image.setSource(resource);
+        image.setVisible(true);
     }
 
 }

@@ -8,13 +8,17 @@ import com.vaadin.ui.AbstractJavaScriptComponent;
 import org.vaadin.liveimageeditor.client.LiveImageEditorState;
 
 import java.io.InputStream;
-import java.io.OutputStream;
 
 @JavaScript({"jquery-1.12.3.min.js", "jquery.mousewheel.js", "live-image-editor.js"})
 @StyleSheet("live-image-editor.css")
 public class LiveImageEditor extends AbstractJavaScriptComponent {
 
     private static final String IMAGE_KEY = "image-key";
+
+    @Override
+    public LiveImageEditorState getState() {
+        return (LiveImageEditorState) super.getState();
+    }
 
     public void setImage(final InputStream inputStream) {
         String imageFileName = "image-file-name";
@@ -38,12 +42,23 @@ public class LiveImageEditor extends AbstractJavaScriptComponent {
         }
     }
 
-    @Override
-    public LiveImageEditorState getState() {
-        return (LiveImageEditorState) super.getState();
+    public void setTranslateX(Double translateX) {
+        this.getState().translateX = translateX;
     }
 
-    public OutputStream getEditedImage() {
+    public void setTranslateY(Double translateY) {
+        this.getState().translateY = translateY;
+    }
+
+    public void setRotate(Double rotate) {
+        this.getState().rotate = rotate;
+    }
+
+    public void setScale(Double scale) {
+        this.getState().scale = scale;
+    }
+
+    public InputStream getEditedImage() {
         return null;
     }
 

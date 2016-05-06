@@ -19,7 +19,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 @Theme("demo")
-@Title("MyComponent Add-on Demo")
 @SuppressWarnings("serial")
 public class DemoUI extends UI {
 
@@ -41,6 +40,8 @@ public class DemoUI extends UI {
 
         send.setVisible(false);
         image.setVisible(false);
+        imageEditor.setWidth(600, Unit.PIXELS);
+        imageEditor.setHeight(400, Unit.PIXELS);
 
         VerticalLayout layout = new VerticalLayout(upload, imageEditor, send, image);
         layout.setMargin(true);

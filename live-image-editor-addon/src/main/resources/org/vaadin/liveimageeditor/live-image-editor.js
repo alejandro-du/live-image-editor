@@ -17,9 +17,9 @@ window.org_vaadin_liveimageeditor_LiveImageEditor = function() {
 
     connector.onStateChange = function() {
         var state = connector.getState();
-        var imageUrl = connector.translateVaadinUri(state.imageUrl);
 
-        if (imageUrl != null) {
+        if (state.imageUrl) {
+            var imageUrl = connector.translateVaadinUri(state.imageUrl) + "?" + Math.random();
             elem.html('<div id="cropBorder" class="crop-border"><img id="image" src="' + imageUrl + '" /></div>');
 
             image = $("#image");
@@ -80,10 +80,6 @@ window.org_vaadin_liveimageeditor_LiveImageEditor = function() {
             });
         }
     }
-
-    $(document).ready(function() {
-
-    });
 
     function updateImage() {
         image.css("transform", "translate(" + tx + "px, " + ty + "px) rotate(" + r + "rad) scale(" + s + ")");

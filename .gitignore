@@ -2,3 +2,5 @@ target/
 .idea
 *.iml
 rebel.xml
+*.scss.cache
+**/VAADIN/widgetsets/

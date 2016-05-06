@@ -20,10 +20,12 @@ window.org_vaadin_liveimageeditor_LiveImageEditor = function() {
 
         if (state.imageUrl) {
             var imageUrl = connector.translateVaadinUri(state.imageUrl) + "?" + Math.random();
-            elem.html('<div id="cropBorder" class="crop-border"><img id="image" src="' + imageUrl + '" /></div>');
+            cropBorderId = "cropBorder-" + connector.getConnectorId();
+            imageId = "image-" + connector.getConnectorId();
+            elem.html('<div id="' + cropBorderId+ '" class="crop-border"><img id="' + imageId + '" src="' + imageUrl + '" /></div>');
 
-            image = $("#image");
-            crop = $("#cropBorder");
+            image = $("#" + imageId);
+            crop = $("#" + cropBorderId);
 
             tx = state.translateX;
             ty = state.translateY;

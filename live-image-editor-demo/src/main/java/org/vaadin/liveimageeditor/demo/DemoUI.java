@@ -28,6 +28,7 @@ public class DemoUI extends UI {
     }
 
     private LiveImageEditor imageEditor = new LiveImageEditor();
+    private LiveImageEditor imageEditor2 = new LiveImageEditor();
     private Button send = new Button("Send", this::sendClicked);
     private Image image = new Image();
     private ByteArrayOutputStream outputStream;
@@ -43,7 +44,7 @@ public class DemoUI extends UI {
         imageEditor.setWidth(600, Unit.PIXELS);
         imageEditor.setHeight(400, Unit.PIXELS);
 
-        VerticalLayout layout = new VerticalLayout(upload, imageEditor, send, image);
+        VerticalLayout layout = new VerticalLayout(upload, imageEditor, send, image, imageEditor2);
         layout.setMargin(true);
         layout.setSpacing(true);
         setContent(layout);
@@ -55,6 +56,7 @@ public class DemoUI extends UI {
 
     private void uploadSucceeded(Upload.SucceededEvent event) {
         imageEditor.setImage(new ByteArrayInputStream(outputStream.toByteArray()));
+        imageEditor2.setImage(new ByteArrayInputStream(outputStream.toByteArray()));
         imageEditor.setTranslateX(50.0);
         imageEditor.setTranslateY(25.0);
         imageEditor.setScale(2.0);

@@ -14,12 +14,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-@Theme("demo")
+@Theme("valo")
 @SuppressWarnings("serial")
 public class DemoUI extends UI {
 
     @WebServlet(value = "/*", asyncSupported = true)
-    @VaadinServletConfiguration(productionMode = false, ui = DemoUI.class, widgetset = "org.vaadin.liveimageeditor.demo.DemoWidgetSet")
+    @VaadinServletConfiguration(productionMode = false, ui = DemoUI.class)
     public static class Servlet extends VaadinServlet {
     }
 
@@ -38,7 +38,6 @@ public class DemoUI extends UI {
         send.setVisible(false);
         editedImage.setVisible(false);
         imageEditor.setWidth(600, Unit.PIXELS);
-        imageEditor.setHeight(400, Unit.PIXELS);
         imageEditor.setTranslateX(.5);
         imageEditor.setTranslateY(.25);
         imageEditor.setRotate(0.7);

@@ -1,20 +1,16 @@
 package org.vaadin.liveimageeditor.demo;
 
-import com.vaadin.server.StreamResource;
-import com.vaadin.ui.*;
-import org.vaadin.liveimageeditor.LiveImageEditor;
-import org.vaadin.liveimageeditor.MyComponent;
-
-import javax.servlet.annotation.WebServlet;
-
 import com.vaadin.annotations.Theme;
-import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.*;
+import org.vaadin.liveimageeditor.LiveImageEditor;
 
-import java.io.ByteArrayInputStream;
+import javax.servlet.annotation.WebServlet;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -27,10 +23,10 @@ public class DemoUI extends UI {
     public static class Servlet extends VaadinServlet {
     }
 
-    private LiveImageEditor imageEditor = new LiveImageEditor();
-    private LiveImageEditor imageEditor2 = new LiveImageEditor();
+    private LiveImageEditor imageEditor = new LiveImageEditor(this::receiveImage);
+
     private Button send = new Button("Send", this::sendClicked);
-    private Image image = new Image();
+    private Image editedImage = new Image();
     private ByteArrayOutputStream outputStream;
 
     @Override
@@ -40,11 +36,16 @@ public class DemoUI extends UI {
         upload.addSucceededListener(this::uploadSucceeded);
 
         send.setVisible(false);
-        image.setVisible(false);
+        editedImage.setVisible(false);
         imageEditor.setWidth(600, Unit.PIXELS);
         imageEditor.setHeight(400, Unit.PIXELS);
+        imageEditor.setTranslateX(.5);
+        imageEditor.setTranslateY(.25);
+        imageEditor.setRotate(0.7);
+        imageEditor.setScale(2.0);
 
-        VerticalLayout layout = new VerticalLayout(upload, imageEditor, send, image, imageEditor2);
+        VerticalLayout layout = new VerticalLayout(upload, imageEditor, send, editedImage);
+        layout.setSizeUndefined();
         layout.setMargin(true);
         layout.setSpacing(true);
         setContent(layout);
@@ -55,20 +56,18 @@ public class DemoUI extends UI {
     }
 
     private void uploadSucceeded(Upload.SucceededEvent event) {
-        imageEditor.setImage(new ByteArrayInputStream(outputStream.toByteArray()));
-        imageEditor2.setImage(new ByteArrayInputStream(outputStream.toByteArray()));
-        imageEditor.setTranslateX(50.0);
-        imageEditor.setTranslateY(25.0);
-        imageEditor.setScale(2.0);
-        imageEditor.setRotate(0.78);
+        imageEditor.setImage(outputStream.toByteArray());
         send.setVisible(true);
     }
 
     private void sendClicked(Button.ClickEvent event) {
-        InputStream editedImage = imageEditor.getEditedImage();
-        StreamResource resource = new StreamResource(() -> editedImage, "edited-image");
-        image.setSource(resource);
-        image.setVisible(true);
+        imageEditor.requestEditedImage();
+    }
+
+    private void receiveImage(InputStream inputStream) {
+        StreamResource resource = new StreamResource(() -> inputStream, "edited-image-" + System.currentTimeMillis());
+        this.editedImage.setSource(resource);
+        this.editedImage.setVisible(true);
     }
 
 }

@@ -42,6 +42,12 @@ public class LiveImageEditor extends AbstractJavaScriptComponent {
 
     private Double scale = 1.0;
 
+    private Integer red = 255;
+
+    private Integer green = 255;
+
+    private Integer blue = 255;
+
     private Double cropWidth = null;
 
     private Double cropHeight = null;
@@ -74,6 +80,7 @@ public class LiveImageEditor extends AbstractJavaScriptComponent {
         setResource(IMAGE_KEY, resource);
         String imageUrl = getResourceUrl(IMAGE_KEY);
         callFunction("setImageUrl", imageUrl);
+        callFunction("setBackgroundColor", red, green, blue);
     }
 
     private String getResourceUrl(String key) {
@@ -121,6 +128,13 @@ public class LiveImageEditor extends AbstractJavaScriptComponent {
         return scale;
     }
 
+    public void setBackgroundColor(int red, int green, int blue) {
+        this.red = red;
+        this.green = green;
+        this.blue = blue;
+        callFunction("setBackgroundColor", red, green, blue);
+    }
+
     public void resetTransformations() {
         setTranslateX(.0);
         setTranslateY(.0);
@@ -157,6 +171,8 @@ public class LiveImageEditor extends AbstractJavaScriptComponent {
         operation.filter(src, dest);
 
         Graphics2D g2d = dest.createGraphics();
+        g2d.setPaint(new Color(red, green, blue));
+        g2d.fillRect(0, 0, destWidth, destHeight);
         g2d.drawImage(src, transform, null);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

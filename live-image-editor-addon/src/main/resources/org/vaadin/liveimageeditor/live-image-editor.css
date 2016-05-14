@@ -3,6 +3,7 @@
     flex-grow: 0;
     width: 100%;
     position: relative;
+    cursor: -webkit-grab;
 }
 
 .image-editor:before {
@@ -17,7 +18,6 @@
     left: 0;
     right: 0;
     bottom: 0;
-    cursor: -webkit-grab;
 }
 
 .crop-border img {

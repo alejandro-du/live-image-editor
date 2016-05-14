@@ -3,30 +3,30 @@ window.org_vaadin_liveimageeditor_LiveImageEditor = function() {
     var ty = 0;
     var r = 0;
     var s = 1;
-
-    var image;
-    var editor;
+    var background = "#fff";
 
     var mouseDown = false;
     var px;
     var py;
 
     var connector = this;
-    var elem = $(connector.getElement());
+
+    var imageEditorId = "image-editor-" + connector.getConnectorId();
+    var imageId = "image-" + connector.getConnectorId();
+    $(connector.getElement()).html('<div id="' + imageEditorId + '" class="image-editor"><div class="crop-border"><img id="' + imageId + '" /><div class="grid"><div class="horizontal-grid"></div><div class="vertical-grid"></div></div></div></div>');
+
+    var editor = $("#" + imageEditorId);
+    var image = $("#" + imageId);
 
     connector.setImageUrl = function(imageUrl) {
         var state = connector.getState();
         var imageUrl = connector.translateVaadinUri(imageUrl) + "?" + Math.random();
-        var imageEditorId = "image-editor-" + connector.getConnectorId();
-        var imageId = "image-" + connector.getConnectorId();
 
-        elem.html('<div id="' + imageEditorId + '" class="image-editor"><div class="crop-border"><img id="' + imageId + '" src="' + imageUrl + '" /><div class="grid"><div class="horizontal-grid"></div><div class="vertical-grid"></div></div></div></div>');
-
-        image = $("#" + imageId);
-        editor = $("#" + imageEditorId);
-
+        image.attr("src", imageUrl);
         image.width(state.width);
         updateImage();
+
+        editor.css('background-color', background);
 
         image.mousedown(function(event) {
             event.preventDefault();
@@ -95,6 +95,14 @@ window.org_vaadin_liveimageeditor_LiveImageEditor = function() {
     connector.setScale = function(scale) {
         s = scale;
         updateImage();
+    }
+
+    connector.setBackgroundColor = function(red, green, blue) {
+        background = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
+
+        if(editor) {
+            editor.css('background-color', background);
+        }
     }
 
     connector.onRequestServerStateUpdate = function() {

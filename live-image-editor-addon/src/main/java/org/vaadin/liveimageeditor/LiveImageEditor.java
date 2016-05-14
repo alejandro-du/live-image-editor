@@ -121,6 +121,13 @@ public class LiveImageEditor extends AbstractJavaScriptComponent {
         return scale;
     }
 
+    public void resetTransformations() {
+        setTranslateX(.0);
+        setTranslateY(.0);
+        setRotate(.0);
+        setScale(1.0);
+    }
+
     private InputStream transformImage() throws IOException {
         BufferedImage src = ImageIO.read(new ByteArrayInputStream(imageData));
 

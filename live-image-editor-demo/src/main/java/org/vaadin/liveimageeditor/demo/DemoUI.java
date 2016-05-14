@@ -45,7 +45,7 @@ public class DemoUI extends UI {
         upload.setImmediate(true);
         upload.addSucceededListener(this::uploadSucceeded);
 
-        //imageEditor.setWidth(600, Unit.PIXELS);
+        imageEditor.setWidth(100, Unit.PERCENTAGE);
         imageEditor.setBackgroundColor(0, 52, 220);
 
         VerticalLayout layout = new VerticalLayout(title, upload, instructions, imageEditor, send, result, editedImage);

@@ -23,10 +23,11 @@ window.org_vaadin_liveimageeditor_LiveImageEditor = function() {
         var imageUrl = connector.translateVaadinUri(imageUrl) + "?" + Math.random();
 
         image.attr("src", imageUrl);
-        image.width(state.width);
         updateImage();
 
         editor.css('background-color', background);
+        editor.width(state.width);
+        editor.height(state.height);
 
         image.mousedown(function(event) {
             event.preventDefault();

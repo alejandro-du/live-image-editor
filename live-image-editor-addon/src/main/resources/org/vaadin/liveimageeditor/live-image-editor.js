@@ -5,7 +5,7 @@ window.org_vaadin_liveimageeditor_LiveImageEditor = function() {
     var s = 1;
 
     var image;
-    var crop;
+    var editor;
 
     var mouseDown = false;
     var px;
@@ -17,12 +17,13 @@ window.org_vaadin_liveimageeditor_LiveImageEditor = function() {
     connector.setImageUrl = function(imageUrl) {
         var state = connector.getState();
         var imageUrl = connector.translateVaadinUri(imageUrl) + "?" + Math.random();
-        cropBorderId = "cropBorder-" + connector.getConnectorId();
-        imageId = "image-" + connector.getConnectorId();
-        elem.html('<div id="' + cropBorderId + '" class="crop-border"><img id="' + imageId + '" src="' + imageUrl + '" /></div>');
+        var imageEditorId = "image-editor-" + connector.getConnectorId();
+        var imageId = "image-" + connector.getConnectorId();
+
+        elem.html('<div id="' + imageEditorId + '" class="image-editor"><div class="crop-border"><img id="' + imageId + '" src="' + imageUrl + '" /><div class="grid"><div class="horizontal-grid"></div><div class="vertical-grid"></div></div></div></div>');
 
         image = $("#" + imageId);
-        crop = $("#" + cropBorderId);
+        editor = $("#" + imageEditorId);
 
         image.width(state.width);
         updateImage();
@@ -31,24 +32,24 @@ window.org_vaadin_liveimageeditor_LiveImageEditor = function() {
             event.preventDefault();
         });
 
-        crop.mousedown(function(event) {
+        editor.mousedown(function(event) {
             mouseDown = true;
             px = event.pageX;
             py = event.pageY;
-            crop.addClass("mouse-down");
+            editor.addClass("mouse-down");
         });
 
-        crop.mouseup(function() {
+        editor.mouseup(function() {
             mouseDown = false;
-            crop.removeClass("mouse-down");
+            editor.removeClass("mouse-down");
         });
 
-        crop.mouseout(function() {
+        editor.mouseleave(function() {
             mouseDown = false;
-            crop.removeClass("mouse-down");
+            editor.removeClass("mouse-down");
         });
 
-        crop.mousemove(function(event) {
+        editor.mousemove(function(event) {
             if (mouseDown) {
                 if (event.shiftKey) {
                     var bounds = image[0].getBoundingClientRect();
@@ -59,8 +60,8 @@ window.org_vaadin_liveimageeditor_LiveImageEditor = function() {
                     r += r1 - r2;
 
                 } else {
-                    tx += (event.pageX - px) / crop.width();
-                    ty += (event.pageY - py) / crop.height();
+                    tx += (event.pageX - px) / editor.width();
+                    ty += (event.pageY - py) / editor.height();
                 }
 
                 px = event.pageX;
@@ -69,7 +70,7 @@ window.org_vaadin_liveimageeditor_LiveImageEditor = function() {
             }
         });
 
-        crop.mousewheel(function(event, delta) {
+        editor.mousewheel(function(event, delta) {
             s += 0.06 * delta;
             updateImage();
             event.preventDefault();
@@ -97,11 +98,11 @@ window.org_vaadin_liveimageeditor_LiveImageEditor = function() {
     }
 
     connector.onRequestServerStateUpdate = function() {
-        connector.updateServerState(tx, ty, r, s, crop.width(), crop.height());
+        connector.updateServerState(tx, ty, r, s, editor.width(), editor.height());
     }
 
     function updateImage() {
-        image.css("transform", "translate(" + (tx * crop.width()) + "px, " + (ty * crop.height()) + "px) rotate(" + r + "rad) scale(" + s + ")");
+        image.css("transform", "translate(" + (tx * editor.width()) + "px, " + (ty * editor.height()) + "px) rotate(" + r + "rad) scale(" + s + ")");
     }
 
 }

@@ -1,11 +1,61 @@
+.image-editor {
+    overflow: hidden;
+    flex-grow: 0;
+    width: 100%;
+    position: relative;
+}
+
+.image-editor:before {
+    content: '';
+    display: block;
+    padding-top: 75%;
+}
+
 .crop-border {
-  width: 100%;
-  height: 100%;
-  border: 1px solid #000;
-  overflow: hidden;
-  cursor: -webkit-grab;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: -webkit-grab;
+}
+
+.crop-border img {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.grid {
+    border: 2px solid black;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.horizontal-grid {
+    height: 33%;
+    position: absolute;
+    top: 33%;
+    left: 0;
+    width: 100%;
+    border-top: 1px dotted #fff;
+    border-bottom: 1px dotted #fff;
+}
+
+.vertical-grid {
+    position: absolute;
+    left: 33%;
+    top: 0;
+    width: 33%;
+    height: 100%;
+    border-left: 1px dotted white;
+    border-right: 1px dotted white;
 }
 
 .mouse-down {
-  cursor: -webkit-grabbing;
+    cursor: -webkit-grabbing;
 }

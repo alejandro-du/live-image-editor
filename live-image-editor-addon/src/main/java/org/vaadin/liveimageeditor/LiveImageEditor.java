@@ -54,6 +54,7 @@ public class LiveImageEditor extends AbstractJavaScriptComponent {
 
     public LiveImageEditor(ImageReceiver imageReceiver) {
         this.imageReceiver = imageReceiver;
+        setWidth(100, Unit.PERCENTAGE);
 
         addFunction("updateServerState", new JavaScriptFunction() {
             @Override

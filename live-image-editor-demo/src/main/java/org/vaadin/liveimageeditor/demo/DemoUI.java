@@ -24,13 +24,13 @@ public class DemoUI extends UI {
     public static class Servlet extends VaadinServlet {
     }
 
-    private LiveImageEditor imageEditor = new LiveImageEditor(this::receiveImage);
-
     private Upload upload = new Upload("Upload an image", this::receiveUpload);
     private Label instructions = new Label("<b>Drag</b> to move the image. Press <b>SHIFT</b> while dragging to rotate. Use the <b>mouse wheel</b> to scale. Click <b>Send</b> to transform the image on the server.");
-    private Label result = new Label("Transformed image as received on the server:");
+    private LiveImageEditor imageEditor = new LiveImageEditor(this::receiveImage);
     private Button send = new Button("Send", this::sendClicked);
+    private Label result = new Label("Transformed image as received on the server:");
     private Image editedImage = new Image();
+
     private ByteArrayOutputStream outputStream;
 
     @Override
@@ -45,7 +45,7 @@ public class DemoUI extends UI {
         upload.setImmediate(true);
         upload.addSucceededListener(this::uploadSucceeded);
 
-        imageEditor.setWidth(600, Unit.PIXELS);
+        //imageEditor.setWidth(600, Unit.PIXELS);
         imageEditor.setBackgroundColor(0, 52, 220);
 
         VerticalLayout layout = new VerticalLayout(title, upload, instructions, imageEditor, send, result, editedImage);

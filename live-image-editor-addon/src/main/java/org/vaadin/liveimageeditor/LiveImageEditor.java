@@ -18,13 +18,28 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * <p>An image editor component that allows users editing images on the client side. Editing is done by performing
+ * transformations over the original image on the client side. No requests to the server are done while manipulating
+ * the image. To get the transformed image on the server side, you must request it by calling the
+ * {@link #requestEditedImage()} method.</p>
+ * <p>Final users can edit the image by using mouse actions. Crop is done against a fixed crop border by dragging
+ * the image. Dragging while keeping the SHIFT key down, rotates the image. Scaling is done by using the mouse wheel.
+ * </p>
+ * <p>The image to be edited can be set by calling the {@link #setImage(byte[])} method.</p>
+ * <p>The edited image can be obtainded by calling the {@link #requestEditedImage()} and using the
+ * {@link ImageReceiver} instance passed during construction.</p>
+ * <p>The background color can be configured using the {@link #setBackgroundColor(int, int, int)} method.</p>
+ *
+ * @author Alejandro Duarte.
+ */
 @JavaScript({"jquery-1.12.3.min.js", "jquery.mousewheel.js", "live-image-editor.js"})
 @StyleSheet("live-image-editor.css")
 public class LiveImageEditor extends AbstractJavaScriptComponent {
 
     public static interface ImageReceiver {
 
-        void recieveImage(InputStream inputStream);
+        void receiveImage(InputStream inputStream);
 
     }
 
@@ -52,6 +67,14 @@ public class LiveImageEditor extends AbstractJavaScriptComponent {
 
     private Double cropHeight = null;
 
+    /**
+     * Constructs a new editor that will send the edited image to the specified {@link ImageReceiver} after the
+     * {@link #requestEditedImage()} method is called.
+     *
+     * @param imageReceiver The {@link ImageReceiver} used to return the edited image. The
+     *                      {@link ImageReceiver#receiveImage(InputStream)} will be called after it is requested via the
+     *                      {@link #requestEditedImage()} method.
+     */
     public LiveImageEditor(ImageReceiver imageReceiver) {
         this.imageReceiver = imageReceiver;
         setWidth(100, Unit.PERCENTAGE);
@@ -68,6 +91,9 @@ public class LiveImageEditor extends AbstractJavaScriptComponent {
         });
     }
 
+    /**
+     * Sets the image to be edited.
+     */
     public void setImage(final byte[] imageData) {
         this.imageData = imageData;
         String imageFileName = "image-file-name-" + getConnectorId();
@@ -93,42 +119,78 @@ public class LiveImageEditor extends AbstractJavaScriptComponent {
         }
     }
 
+    /**
+     * Sets the translation on the X axis as a percentage of the editor width.
+     *
+     * @param translateX translation amount as a percentage of the editor width. For example, a value of 0.5 would
+     *                   make the left border of the image to be placed on the horizontal center of the editor.
+     */
     public void setTranslateX(Double translateX) {
         this.translateX = translateX;
         callFunction("setTranslateX", translateX);
     }
 
+    /**
+     * @return The translation on the X axis as a percentage of the editor width.
+     */
     public Double getTranslateX() {
         return translateX;
     }
 
+    /**
+     * Sets the translation on the Y axis as a percentage of the editor height.
+     *
+     * @param translateY translation amount as a percentage of the editor height. For example, a value of 0.5 would
+     *                   make the top border of the image to be placed on the vertical center of the editor.
+     */
     public void setTranslateY(Double translateY) {
         this.translateY = translateY;
         callFunction("setTranslateY", translateY);
     }
 
+    /**
+     * @return The translation on the Y axis as a percentage of the editor height.
+     */
     public Double getTranslateY() {
         return translateY;
     }
 
+    /**
+     * Sets the rotation value.
+     *
+     * @param rotate the rotation value in radians.
+     */
     public void setRotate(Double rotate) {
         this.rotate = rotate;
         callFunction("setRotate", rotate);
     }
 
+    /**
+     * @return The rotation value in radians.
+     */
     public Double getRotate() {
         return rotate;
     }
 
+    /**
+     * @param scale Sets the scale factor. For example, 1.0 won't scale the original image, whilst 2.0 would make it
+     *              twice its original size.
+     */
     public void setScale(Double scale) {
         this.scale = scale;
         callFunction("setScale", scale);
     }
 
+    /**
+     * @return The scale factor.
+     */
     public Double getScale() {
         return scale;
     }
 
+    /**
+     * Sets the color to be used as a background of the image.
+     */
     public void setBackgroundColor(int red, int green, int blue) {
         this.red = red;
         this.green = green;
@@ -136,6 +198,9 @@ public class LiveImageEditor extends AbstractJavaScriptComponent {
         callFunction("setBackgroundColor", red, green, blue);
     }
 
+    /**
+     * Sets the transformation values so that the original image won't be changed.
+     */
     public void resetTransformations() {
         setTranslateX(.0);
         setTranslateY(.0);
@@ -182,6 +247,10 @@ public class LiveImageEditor extends AbstractJavaScriptComponent {
         return new ByteArrayInputStream(outputStream.toByteArray());
     }
 
+    /**
+     * Requests the edited or transformed image. Once the request is made, the transformed image is sent to the
+     * {@link #imageReceiver} instance specified in the constructor.
+     */
     public void requestEditedImage() {
         callFunction("onRequestServerStateUpdate");
     }
@@ -195,7 +264,7 @@ public class LiveImageEditor extends AbstractJavaScriptComponent {
         cropHeight = arguments.getNumber(5);
 
         InputStream inputStream = transformImage();
-        imageReceiver.recieveImage(inputStream);
+        imageReceiver.receiveImage(inputStream);
     }
 
 }

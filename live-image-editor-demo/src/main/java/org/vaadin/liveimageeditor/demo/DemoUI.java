@@ -1,6 +1,7 @@
 package org.vaadin.liveimageeditor.demo;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinRequest;
@@ -16,6 +17,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 @Theme("valo")
+@Title("Live Image Editor add-on for Vaadin")
 @SuppressWarnings("serial")
 public class DemoUI extends UI {
 

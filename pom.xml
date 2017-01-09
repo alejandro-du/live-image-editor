@@ -5,7 +5,7 @@
 	<groupId>org.vaadin.liveimageeditor</groupId>
 	<artifactId>live-image-editor-root</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0</version>
+	<version>2.0</version>
 
 	<modules>
 		<module>live-image-editor-addon</module>

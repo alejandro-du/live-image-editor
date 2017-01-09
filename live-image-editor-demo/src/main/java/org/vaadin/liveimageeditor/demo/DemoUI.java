@@ -44,7 +44,6 @@ public class DemoUI extends UI {
         instructions.setContentMode(ContentMode.HTML);
         instructions.setWidth(600, Unit.PIXELS);
 
-        upload.setImmediate(true);
         upload.addSucceededListener(this::uploadSucceeded);
 
         imageEditor.setWidth(100, Unit.PERCENTAGE);

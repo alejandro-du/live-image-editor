@@ -6,10 +6,6 @@ the image.
 
 ![Alt text](/screenshot-01.png?raw=true "Screenshot")
 
-## Online demo
-
-Try the add-on demo at http://alejandro.jelastic.servint.net/live-image-editor-demo/
-
 ## Download release
 
 Official releases of this add-on are available at Vaadin Directory. For Maven instructions, download and reviews, go to http://vaadin.com/addon/live-image-editor

@@ -10,7 +10,7 @@ the image.
 
 Official releases of this add-on are available at Vaadin Directory. For Maven instructions, download and reviews, go to http://vaadin.com/addon/live-image-editor
 
-## Building and running demo
+## Building and running the demo
 
 git clone https://github.com/alejandro-du/live-image-editor.git
 mvn clean install

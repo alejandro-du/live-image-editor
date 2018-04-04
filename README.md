@@ -1,3 +1,7 @@
+[![Published on vaadin.com/directory](https://img.shields.io/vaadin-directory/status/live-image-editor.svg)](https://img.shields.io/vaadin-directory/status/live-image-editor.svg)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/live-image-editor.svg)](https://img.shields.io/vaadin-directory/star/live-image-editor.svg)
+[![Latest version on vaadin.com/directory](https://img.shields.io/vaadin-directory/v/live-image-editor.svg)](https://img.shields.io/vaadin-directory/v/live-image-editor.svg)
+
 # Live Image Editor Add-on for Vaadin
 
 An image editor component that allows users editing images on the client side. Editing is done by performing

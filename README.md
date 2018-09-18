@@ -1,5 +1,5 @@
-[![Published on vaadin.com/directory](https://img.shields.io/vaadin-directory/status/live-image-editor.svg)](https://img.shields.io/vaadin-directory/status/live-image-editor.svg)
-[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/live-image-editor.svg)](https://img.shields.io/vaadin-directory/star/live-image-editor.svg)
+[![Published on Vaadin  Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/live-image-editor)
+[![Stars on Vaadin Directory](https://img.shields.io/vaadin-directory/star/live-image-editor.svg)](https://vaadin.com/directory/component/live-image-editor)
 [![Latest version on vaadin.com/directory](https://img.shields.io/vaadin-directory/v/live-image-editor.svg)](https://img.shields.io/vaadin-directory/v/live-image-editor.svg)
 
 # Live Image Editor Add-on for Vaadin

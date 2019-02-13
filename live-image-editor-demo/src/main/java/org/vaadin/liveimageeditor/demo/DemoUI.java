@@ -6,7 +6,7 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.liveimageeditor.LiveImageEditor;
